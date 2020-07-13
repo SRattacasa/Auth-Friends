@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import axios from 'axios'
+import { axiosWithAuth } from '../util/axiosWithAuth';
 
-const Login = () => { 
+const Login = props => { 
     
     
     // const actualLogin = () => { 
@@ -10,10 +10,12 @@ const Login = () => {
   
         const formSubmit = (e) => {
             e.preventDefault();
-            axios.post("http://localhost:5000/api/login", formState.credentials)
+            axiosWithAuth().post("/login", formState.credentials)
         .then(res => { 
             window.localStorage.setItem('token', res.data.payload)
             console.log(res)
+            props.history.push('/friendslist')
+            
         }
         )
             console.log("Form submitted", formState);
